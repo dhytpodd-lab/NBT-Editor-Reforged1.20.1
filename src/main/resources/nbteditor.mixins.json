@@ -1,0 +1,53 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.luneruniverse.minecraft.mod.nbteditor.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "plugin": "com.luneruniverse.minecraft.mod.nbteditor.mixin.toggled.NBTEditorMixinPlugin",
+  "mixins": [
+    "ServerPlayNetworkHandlerMixin",
+    "ServerPlayerEntityMixin",
+    "ShulkerBoxSlotMixin",
+    "ShulkerBoxScreenHandlerMixin",
+    "HorseScreenHandlerMixin",
+    "HorseScreenHandler1Mixin",
+    "HorseScreenHandler2Mixin",
+    "DataTrackerMixin",
+    "ThreadExecutorMixin",
+    "ClickSlotC2SPacketMixin"
+  ],
+  "client": [
+    "ChatScreenMixin",
+    "ChatScreenAccessor",
+    "ChatInputSuggestorAccessor",
+    "ClientConnectionMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ClickableWidgetAccessor",
+    "CreativeInventoryScreenCreativeSlotAccessor",
+    "StringNbtWriterAccessor",
+    "CreativeInventoryScreenMixin",
+    "ItemStackMixin",
+    "HandledScreenAccessor",
+    "SliderWidgetAccessor",
+    "TextFieldWidgetAccessor",
+    "TextFieldWidgetMixin",
+    "MinecraftClientMixin",
+    "StringNbtReaderMixin",
+    "ScreenMixin",
+    "BookScreenMixin",
+    "HandledScreenMixin",
+    "NativeImageMixin",
+    "ScreenshotRecorderMixin",
+    "UtilMixin",
+    "KeyboardMixin",
+    "ChatInputSuggestorMixin",
+    "ChatInputSuggestorSuggestionWindowAccessor",
+    "ClientPlayerEntityMixin",
+    "EnchantmentMixin",
+    "SplashOverlayMixin",
+    "ScreenHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

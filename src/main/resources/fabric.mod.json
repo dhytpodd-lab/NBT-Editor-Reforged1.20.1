@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "nbteditor",
+  "version": "${version}",
+
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {
+    "homepage": "${mod_homepage}",
+    "issues": "${mod_issues}",
+    "sources": "${mod_sources}"
+  },
+
+  "license": "MIT",
+  "icon": "${mod_icon}",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.luneruniverse.minecraft.mod.nbteditor.NBTEditor"
+    ],
+    "client": [
+      "com.luneruniverse.minecraft.mod.nbteditor.NBTEditorClient"
+    ],
+    "modmenu": [
+      "com.luneruniverse.minecraft.mod.nbteditor.NBTEditorModMenuApi"
+    ]
+  },
+  "mixins": [
+    "nbteditor.mixins.json",
+    "nbteditor_multiversion.mixins.json",
+    "nbteditor_multiversion_commandapi.mixins.json",
+    "nbteditor_multiversion_networkingapi.mixins.json"
+  ],
+  
+  "accessWidener": "nbteditor.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric": "*",
+    "minecraft": ">=1.17-",
+    "java": ">=16"
+  },
+  "suggests": {
+    "nbt_ac": ">=1.1"
+  },
+  
+  "custom": {
+    "modmenu": {
+      "links": {
+      	"modmenu.discord": "${mod_discord}",
+      	"modmenu.wiki": "${mod_wiki}",
+      	"modmenu.buymeacoffee": "${mod_support}"
+      }
+    },
+    "loom:injected_interfaces": {
+      "net/minecraft/class_4068": ["com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVDrawableParent"],
+      "net/minecraft/class_437": ["com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVScreenParent"],
+      "net/minecraft/class_342": ["com/luneruniverse/minecraft/mod/nbteditor/screens/InjectableTickable"],
+      "net/minecraft/class_364": ["com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVElementParent"],
+      "net/minecraft/class_2945": ["com/luneruniverse/minecraft/mod/nbteditor/misc/ResetableDataTracker"],
+      "net/minecraft/class_2540": ["com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVPacketByteBufParent"],
+      "net/minecraft/class_1799": ["com/luneruniverse/minecraft/mod/nbteditor/multiversion/nbt/IntegratedNBTManager", "com/luneruniverse/minecraft/mod/nbteditor/multiversion/nbt/MVItemStackParent"],
+      "net/minecraft/class_2813": ["com/luneruniverse/minecraft/mod/nbteditor/packets/ClickSlotC2SPacketParent"]
+    }
+  }
+}

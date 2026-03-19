@@ -1,0 +1,30 @@
+{
+  "accessWidener": "nbteditor.accesswidener",
+  "injected_interfaces": {
+    "net/minecraft/class_4068": [
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVDrawableParent"
+    ],
+    "net/minecraft/class_437": [
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVScreenParent"
+    ],
+    "net/minecraft/class_342": [
+      "com/luneruniverse/minecraft/mod/nbteditor/screens/InjectableTickable"
+    ],
+    "net/minecraft/class_364": [
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVElementParent"
+    ],
+    "net/minecraft/class_2945": [
+      "com/luneruniverse/minecraft/mod/nbteditor/misc/ResetableDataTracker"
+    ],
+    "net/minecraft/class_2540": [
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVPacketByteBufParent"
+    ],
+    "net/minecraft/class_1799": [
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/nbt/IntegratedNBTManager",
+      "com/luneruniverse/minecraft/mod/nbteditor/multiversion/nbt/MVItemStackParent"
+    ],
+    "net/minecraft/class_2813": [
+      "com/luneruniverse/minecraft/mod/nbteditor/packets/ClickSlotC2SPacketParent"
+    ]
+  }
+}
