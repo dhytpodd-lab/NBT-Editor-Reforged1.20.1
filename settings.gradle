@@ -1,11 +1,22 @@
 pluginManagement {
-    repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
-        gradlePluginPortal()
-    }
+	repositories {
+		maven {
+			name = 'Architectury'
+			url = 'https://maven.architectury.dev/'
+		}
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		maven {
+			name = 'Forge'
+			url = 'https://maven.minecraftforge.net/'
+		}
+		maven {
+			name = 'Mojang'
+			url = 'https://libraries.minecraft.net/'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
 }
-
-include ':nbteditor_1.17'

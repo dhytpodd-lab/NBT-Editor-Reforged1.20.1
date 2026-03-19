@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'dev.architectury.loom' version '1.7.423'
 	id 'maven-publish'
 }
 
@@ -11,169 +11,133 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-	
-	exclusiveContent {
-		forRepository {
-			maven {
-				name = "Modrinth"
-				url = "https://api.modrinth.com/maven"
-			}
-		}
-		filter {
-			includeGroup "maven.modrinth"
+	maven {
+		name = 'Architectury'
+		url = 'https://maven.architectury.dev/'
+	}
+	maven {
+		name = 'Fabric'
+		url = 'https://maven.fabricmc.net/'
+	}
+	maven {
+		name = 'Forge'
+		url = 'https://maven.minecraftforge.net/'
+	}
+	mavenCentral()
+}
+
+loom {
+	accessWidenerPath = file('src/main/resources/nbteditor.accesswidener')
+
+	forge {
+		mixinConfig 'nbteditor.mixins.json'
+		mixinConfig 'nbteditor_multiversion.mixins.json'
+		mixinConfig 'nbteditor_multiversion_commandapi.mixins.json'
+		mixinConfig 'nbteditor_multiversion_networkingapi.mixins.json'
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/commands/factories/MaxStackSizeCommand.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/ClientPlayNetworkHandlerMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/GameRendererMixin_1_21_1.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/GameRendererMixin_1_21_2.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/ItemModelManagerMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/ItemRenderStateLayerRenderStateMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/mixin/toggled/ItemStackMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/MVComponentType.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/mixin/toggled/BookScreenContentsMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/mixin/toggled/ItemStackMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/mixin/toggled/TextSerializerMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/nbt/components/**'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/MVPacketCustomPayload.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/mixin/toggled/ClientConnectionMixin_1_20_5.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/mixin/toggled/CustomPayload1Mixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/mixin/toggled/CustomPayloadC2SPacketMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/mixin/toggled/CustomPayloadS2CPacketMixin.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/multiversion/networking/mixin/toggled/ServerPlayNetworkHandlerMixin_1_20_2.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/tagreferences/general/ComponentTagReference.java'
+			exclude 'com/luneruniverse/minecraft/mod/nbteditor/tagreferences/general/NBTComponentTagReference.java'
 		}
 	}
 }
 
-loom {
-	accessWidenerPath = file("src/main/resources/nbteditor.accesswidener")
-}
-
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
-	
-	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-	
-	implementation files("nbteditor_1.17/build/devlibs/nbteditor_1.17-0.0.0-dev.jar")
-	
-	modImplementation "maven.modrinth:modmenu:13.0.3"
-	modImplementation "maven.modrinth:nbt-autocomplete:nJhOBbir"
+	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 processResources {
-	inputs.property "version", project.version
-	
-	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
+	inputs.property 'version', project.version
+	inputs.property 'minecraft_version_range', project.minecraft_version_range
+	inputs.property 'forge_version_range', project.forge_version_range
+	inputs.property 'loader_version_range', project.loader_version_range
+	inputs.property 'mod_author', project.mod_author
+	inputs.property 'mod_homepage', project.mod_homepage
+	inputs.property 'mod_issues', project.mod_issues
+	inputs.property 'mod_sources', project.mod_sources
+	inputs.property 'mod_discord', project.mod_discord
+	inputs.property 'mod_wiki', project.mod_wiki
+	inputs.property 'mod_support', project.mod_support
+	inputs.property 'mod_icon', project.mod_icon
+
+	filesMatching(['META-INF/mods.toml', 'fabric.mod.json']) {
+		expand(
+			version: inputs.properties.version,
+			minecraft_version_range: inputs.properties.minecraft_version_range,
+			forge_version_range: inputs.properties.forge_version_range,
+			loader_version_range: inputs.properties.loader_version_range,
+			mod_id: project.archives_base_name,
+			mod_name: project.mod_name,
+			mod_author: project.mod_author,
+			mod_description: project.mod_description,
+			mod_homepage: project.mod_homepage,
+			mod_issues: project.mod_issues,
+			mod_sources: project.mod_sources,
+			mod_discord: project.mod_discord,
+			mod_wiki: project.mod_wiki,
+			mod_support: project.mod_support,
+			mod_icon: project.mod_icon
+		)
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 16
+	it.options.release = 17
+	it.options.encoding = 'UTF-8'
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_16
-	targetCompatibility = JavaVersion.VERSION_16
-}
-
-compileJava.dependsOn ":nbteditor_1.17:jar"
-remapSourcesJar.dependsOn ":nbteditor_1.17:jar"
-
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-
-def checkRefmap(Map json) {
-	if (!(json.keySet() - ["mappings", "data"]).isEmpty())
-		return false;
-	if (!(json.data.keySet() - ["named:intermediary"]).isEmpty())
-		return false;
-	return true;
-}
-
-task mergeRefmapJson {
-	dependsOn classes
-	dependsOn ":nbteditor_1.17:classes"
-	
-	doLast {
-		File mainRefmap = file("build/classes/java/main/nbteditor-refmap.json")
-		File additionalRefmap = file("nbteditor_1.17/build/classes/java/main/nbteditor_1.17-refmap.json")
-		
-		if (!mainRefmap.exists())
-			throw new GradleException("Missing main refmap!");
-		if (!additionalRefmap.exists())
-			throw new GradleException("Missing 1.17 refmap!");
-		
-		def parser = new JsonSlurper()
-		def mainJson = parser.parse(mainRefmap)
-		def additionalJson = parser.parse(additionalRefmap)
-		
-		if (!checkRefmap(mainJson))
-			throw new GradleException("Main refmap is invalid!");
-		if (!checkRefmap(additionalJson))
-			throw new GradleException("1.17 refmap is invalid!");
-		
-		mainJson.mappings += additionalJson.mappings
-		mainJson.data["named:intermediary"] += additionalJson.data["named:intermediary"]
-		
-		mainRefmap.text = JsonOutput.prettyPrint(JsonOutput.toJson(mainJson))
-	}
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+	withSourcesJar()
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
-	
-	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
+	inputs.property 'archivesName', project.base.archivesName
+
+	from('LICENSE') {
+		rename { "${it}_${inputs.properties.archivesName}" }
 	}
-	
-	dependsOn mergeRefmapJson
 }
 
-def getGitHash() {
-	return "git rev-parse --verify --short HEAD".execute().text.trim()
-}
-
-task mergeDevLibs(type: Jar) {
-	dependsOn remapJar
-	dependsOn ":nbteditor_1.17:jar"
-	
-	from(zipTree(jar.archiveFile.get()))
-	
-	from(zipTree("nbteditor_1.17/build/devlibs/nbteditor_1.17-0.0.0-dev.jar")) {
-		include "**/*.class"
-	}
-	
-	archiveFile.set(file("${buildDir}/devlibs/nbteditor-${project.mod_version}-${getGitHash()}-dev.jar"))
-}
-
-task mergeLibs(type: Jar) {
-	dependsOn remapJar
-	dependsOn ":nbteditor_1.17:remapJar"
-	
-	from(zipTree(remapJar.archiveFile.get()))
-	
-	from(zipTree("nbteditor_1.17/build/libs/nbteditor_1.17-0.0.0.jar")) {
-		include "**/*.class"
-	}
-	
-	archiveFile.set(file("${buildDir}/libs/nbteditor-${project.mod_version}-${getGitHash()}.jar"))
-}
-
-build.dependsOn mergeDevLibs, mergeLibs
-
-// configure the maven publication
 publishing {
 	publications {
-		create("mavenJava", MavenPublication) {
+		create('mavenJava', MavenPublication) {
 			artifactId = project.archives_base_name
 			from components.java
 		}
 	}
-	
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
 	}
 }
 
 test {
-    exclude '**/*'
+	exclude '**/*'
 }
